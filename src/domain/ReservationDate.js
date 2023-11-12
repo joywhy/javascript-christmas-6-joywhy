@@ -1,5 +1,12 @@
 import Validator from '../utils/Validator.js';
-import { DATE_RANGE, WEEKEND, CHRISTMAS } from '../constants/index.js';
+import {
+  DATE_RANGE,
+  WEEKEND,
+  CHRISTMAS,
+  ERROR_MESSAGES,
+} from '../constants/messages.js';
+import InputError from '../error/InputError.js';
+
 class ReservationDate {
   //날짜
   //할인 가능 내역
@@ -12,7 +19,9 @@ class ReservationDate {
   }
   #validate(date) {
     Validator.isInteger(date);
-    Validator.isRange(DATE_RANGE.to, DATE_RANGE.from, date);
+    if (!Validator.isRange(DATE_RANGE.to, DATE_RANGE.from, date)) {
+      throw new InputError(ERROR_MESSAGES.notRange);
+    }
   }
 
   setDate(date) {

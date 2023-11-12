@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { MESSAGES } from '../constants/index.js';
+import { MESSAGES } from '../constants/messages.js';
 const OutputView = {
   printMenu() {
     Console.print('<주문 메뉴>');

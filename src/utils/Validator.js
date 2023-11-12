@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from '../constants/index.js';
+import { ERROR_MESSAGES } from '../constants/messages.js';
 import InputError from '../error/InputError.js';
 
 const Validator = {
@@ -23,14 +23,21 @@ const Validator = {
     const isValid = numbers.some((num) => num === value);
 
     if (!isValid) {
-      throw new InputError(ERROR_MESSAGES.notRange);
+      return false;
     }
+    return true;
   },
   isInteger(num) {
     if (typeof num === 'number' && num % 1 === 0) {
       return true;
     }
     throw new InputError(ERROR_MESSAGES.notInteger);
+  },
+  IsIncluded(value, separator) {
+    if (!value.includes(separator)) {
+      throw new InputError(ERROR_MESSAGES.otherFormat);
+    }
+    return true;
   },
 };
 
