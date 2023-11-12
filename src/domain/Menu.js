@@ -37,7 +37,10 @@ class Menu {
     Validator.IsIncluded(order, '-');
     this.isValidDish();
     // 갯수가 1미만이거나 숫자가 아닐시
-    Validator.isInteger(this.#count);
+    if (!Validator.isInteger(this.#count)) {
+      throw new InputError(ERROR_MESSAGES.otherFormat);
+    }
+
     if (!Validator.isRange(1, 20, this.#count)) {
       throw new InputError(ERROR_MESSAGES.otherFormat);
     }

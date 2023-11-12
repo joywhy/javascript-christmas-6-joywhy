@@ -31,7 +31,7 @@ const Validator = {
     if (typeof num === 'number' && num % 1 === 0) {
       return true;
     }
-    throw new InputError(ERROR_MESSAGES.notInteger);
+    return false;
   },
   IsIncluded(value, separator) {
     if (!value.includes(separator)) {

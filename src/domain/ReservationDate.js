@@ -18,7 +18,10 @@ class ReservationDate {
     this.#specialDay = [3, 10, 17, 24, 31];
   }
   #validate(date) {
-    Validator.isInteger(date);
+    if (!Validator.isInteger(date)) {
+      throw new InputError(ERROR_MESSAGES.notRange);
+    }
+
     if (!Validator.isRange(DATE_RANGE.to, DATE_RANGE.from, date)) {
       throw new InputError(ERROR_MESSAGES.notRange);
     }

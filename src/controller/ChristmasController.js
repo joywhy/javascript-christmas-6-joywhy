@@ -9,7 +9,6 @@ class ChristmasController {
   }
   async promote() {
     const reservationDate = await this.#inputDate();
-    // console.log(reservationDate.getbenefitDetails());
     const menuList = await this.#inputOrder();
 
     this.#showPromotionResult(reservationDate, menuList);
@@ -40,6 +39,15 @@ class ChristmasController {
   }
   #showPromotionResult(date, menuList) {
     // 프로모션 내용 출력
+    OutputView.printBenefitsPreview();
+
+    OutputView.printOrderedMenu();
+    OutputView.printSubtotalBFDiscount();
+    OutputView.printGiftedMenu();
+    OutputView.printBenefitsDetails();
+    OutputView.printTotalBenefitsAmount();
+    OutputView.printEstimatedPaymentAmount();
+    OutputView.printEventBadge();
   }
 }
 export default ChristmasController;
