@@ -1,33 +1,35 @@
 import { Console } from '@woowacourse/mission-utils';
 import { MESSAGES } from '../constants/messages.js';
 const OutputView = {
-  printOrderedMenu(menu) {
+  print(message) {
+    Console.print(message);
+  },
+  printOrderedMenu() {
     Console.print(MESSAGES.orderedMenu);
-    Console.print(menu);
   },
-  printSubtotalBFDiscount(amount) {
+  printSubtotalBFDiscount() {
     Console.print(MESSAGES.subtotalBeforeDiscount);
-    Console.print(`${amount}원`);
+    // Console.print(`${amount}원`);
   },
-  printGiftedMenu(gift) {
+  printGiftedMenu() {
     Console.print(MESSAGES.giftedMenu);
-    Console.print(gift);
+    // Console.print(gift);
   },
-  printBenefitsDetails(benefit) {
+  printBenefitsDetails() {
     Console.print(MESSAGES.benefitsDetails);
-    Console.print(benefit);
+    // Console.print(benefit);
   },
-  printTotalBenefitsAmount(price) {
+  printTotalBenefitsAmount() {
     Console.print(MESSAGES.totalBenefitsAmount);
-    Console.print(`${price}원`);
+    // Console.print(`${price}원`);
   },
-  printEstimatedPaymentAmount(price) {
+  printEstimatedPaymentAmount() {
     Console.print(MESSAGES.estimatedPaymentAmount);
-    Console.print(`${price}원`);
+    // Console.print(`${price}원`);
   },
-  printEventBadge(badge) {
+  printEventBadge() {
     Console.print(MESSAGES.eventBadge);
-    Console.print(badge);
+    // Console.print(badge);
   },
 
   printIntroduction() {

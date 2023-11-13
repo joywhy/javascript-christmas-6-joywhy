@@ -6,14 +6,18 @@ import Menu from '../domain/Menu.js';
 import Menus from '../domain/Menus.js';
 
 class ChristmasController {
+  #reservationDate;
+  #menuList;
   constructor() {
     OutputView.printIntroduction();
   }
   async promote() {
     const reservationDate = await this.#inputDate();
     const menuList = await this.#inputOrder();
-
-    this.#showPromotionResult(reservationDate, menuList);
+    this.#reservationDate = reservationDate;
+    this.#menuList = menuList;
+    // const event = new Event(reservationDate,menuList);
+    this.#showPromotionResult(); //event 인자
   }
   async #inputDate() {
     try {
@@ -33,24 +37,32 @@ class ChristmasController {
       const dishs = Parser.stringToArray(input, ',').map(
         (menu) => new Menu(menu)
       );
-      const menus = new Menus(dishs);
-      return menus;
+      return new Menus(dishs);
     } catch (error) {
       OutputView.printError(error);
       await this.#inputOrder();
     }
   }
-  #showPromotionResult(date, menuList) {
+  #showPromotionResult(event) {
     // 프로모션 내용 출력
     OutputView.printBenefitsPreview();
 
-    OutputView.printOrderedMenu();
-    OutputView.printSubtotalBFDiscount();
+    this.#showOrderedMenu();
+
     OutputView.printGiftedMenu();
     OutputView.printBenefitsDetails();
     OutputView.printTotalBenefitsAmount();
     OutputView.printEstimatedPaymentAmount();
     OutputView.printEventBadge();
+  }
+  #showOrderedMenu() {
+    OutputView.printOrderedMenu();
+    this.#menuList.getDishs().forEach((dish) => {
+      OutputView.print(dish.getDishNCount());
+    });
+
+    OutputView.printSubtotalBFDiscount();
+    OutputView.print(`${this.#menuList.getTotalPrice()}원`);
   }
 }
 export default ChristmasController;

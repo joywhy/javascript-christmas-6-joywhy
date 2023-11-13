@@ -1,7 +1,7 @@
 import InputError from '../error/InputError.js';
 import { ERROR_MESSAGES } from '../constants/messages.js';
 class Menus {
-  #dishs; //=[new Menu(menu),new Menu(menu)]
+  #dishs; //=[ Menu{},Menu{},...]
 
   constructor(dishs) {
     this.#dishs = dishs;
@@ -11,6 +11,8 @@ class Menus {
   #validate() {
     if (this.#isOnlyDrink()) throw new InputError(ERROR_MESSAGES.onlyDrink);
     if (this.#isDuplicates()) throw new InputError(ERROR_MESSAGES.otherFormat);
+    if (this.getTotalCount() > 20)
+      throw new InputError(ERROR_MESSAGES.overOrderCount);
   }
   #isOnlyDrink() {
     if (
@@ -21,9 +23,7 @@ class Menus {
     }
     return false;
   }
-  getCount() {
-    return this.#dishs.length;
-  }
+
   #isDuplicates() {
     const menus = this.#dishs.map((dish) => dish.getdish());
     const uniqueMenus = new Set(menus);
@@ -32,6 +32,12 @@ class Menus {
       return true;
     }
     return false;
+  }
+  getDishs() {
+    return this.#dishs;
+  }
+  getCount() {
+    return this.#dishs.length;
   }
   //   #findDuplicates() {
   //     const hashTable = {};
@@ -53,16 +59,27 @@ class Menus {
   //     const menus = this.#dishs.filter((dish) => dish.getdish() === menu);
   //     return menus;
   //   }
-  getTotalCount() {}
+  getTotalCount() {
+    const totalCount = this.#dishs.reduce((acc, cur) => {
+      return acc + cur.getCount();
+    }, 0);
 
-  // - [ ] 중복 메뉴를 입력한 경우(e.g. 시저샐러드-1,시저샐러드-1), "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."라는 에러 메시지를 보여 준다.
-  //   - 총 menu 갯수 구하기
-  //   - 메인디시 포함 되어있는지
-  //   - 디져트 포함되어있는지
-  //   - 메뉴형식이 다른경우 ->"[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."
-  //   - 중복 메뉴 입력하는 경우 -> "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.
+    return totalCount;
+  }
+  getTotalPrice() {
+    const totalPrice = this.#dishs.reduce((acc, cur) => {
+      return (acc += cur.getPrice());
+    }, 0);
+
+    return totalPrice;
+  }
+  isMainDishIncluded() {
+    //   - 메인디시 포함 되어있는지
+  }
+  isDessertsIncluded() {
+    //   - 디져트 포함되어있는지
+  }
   //   - 총 주문한 메뉴 목록
-  //   - 총 주문 가격
 }
 
 export default Menus;
