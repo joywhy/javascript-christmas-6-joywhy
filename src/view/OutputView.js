@@ -37,8 +37,8 @@ const OutputView = {
     Console.print(MESSAGES.benefitsPreview);
   },
 
-  printError(message) {
-    Console.print(message);
+  printError(error) {
+    Console.print(error.message);
   },
   // ...
 };

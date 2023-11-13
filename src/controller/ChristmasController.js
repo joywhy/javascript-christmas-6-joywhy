@@ -3,6 +3,7 @@ import OutputView from '../view/OutputView.js';
 import ReservationDate from '../domain/ReservationDate.js';
 import Parser from '../utils/Parser.js';
 import Menu from '../domain/Menu.js';
+
 class ChristmasController {
   constructor() {
     OutputView.printIntroduction();

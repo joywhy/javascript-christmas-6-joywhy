@@ -8,21 +8,20 @@ import {
 import InputError from '../error/InputError.js';
 
 class ReservationDate {
-  //날짜
-  //할인 가능 내역
   #date;
   #specialDay;
-  constructor(date) {
-    this.#validate(date);
-    this.setDate(date);
+
+  constructor(day) {
+    this.#validate(day);
+    this.setDate(day);
     this.#specialDay = [3, 10, 17, 24, 31];
   }
-  #validate(date) {
-    if (!Validator.isInteger(date)) {
+  #validate(day) {
+    if (!Validator.isInteger(Number(day))) {
       throw new InputError(ERROR_MESSAGES.notRange);
     }
 
-    if (!Validator.isRange(DATE_RANGE.to, DATE_RANGE.from, date)) {
+    if (!Validator.isRange(DATE_RANGE.to, DATE_RANGE.from, Number(day))) {
       throw new InputError(ERROR_MESSAGES.notRange);
     }
   }
@@ -52,7 +51,6 @@ class ReservationDate {
   }
 
   isWeekend() {
-    //주말인지 평일인지
     const day = this.#date.getDay();
     return day === WEEKEND.friday || day === WEEKEND.saturday; //5= 금 6= 토 , 일=0
   }
