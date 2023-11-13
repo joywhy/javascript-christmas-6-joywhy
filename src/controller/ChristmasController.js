@@ -47,8 +47,8 @@ class ChristmasController {
 
     this.#showOrderedMenu(menuList);
     OutputView.printGiftedMenu(this.#event.getGiftedMenu());
+    this.#showBenefitsDetails();
 
-    OutputView.printBenefitsDetails();
     OutputView.printTotalBenefitsAmount();
     OutputView.printEstimatedPaymentAmount();
     OutputView.printEventBadge();
@@ -64,6 +64,17 @@ class ChristmasController {
 
     OutputView.printSubtotalBFDiscount();
     OutputView.print(`${menuList.getTotalPrice()}원`);
+  }
+  #showBenefitsDetails() {
+    OutputView.printBenefitsDetails();
+    const benefitsDetails = this.#event.getBenefitsDetails();
+    if (!benefitsDetails) {
+      OutputView.print('없음');
+      return;
+    }
+    for (let key in benefitsDetails) {
+      OutputView.print(`${key}: -${benefitsDetails[key]}원`);
+    }
   }
 }
 export default ChristmasController;
