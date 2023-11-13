@@ -9,6 +9,7 @@ class Menu {
   #count;
 
   constructor(order) {
+    //큐블-3
     this.#setOrder(order);
     this.#validate(order);
   }
@@ -34,9 +35,12 @@ class Menu {
     return title;
   }
   #validate(order) {
-    Validator.IsIncluded(order, '-');
+    Validator.isIncluded(order, '-');
     this.isValidDish();
     // 갯수가 1미만이거나 숫자가 아닐시
+    this.isValidCount();
+  }
+  isValidCount() {
     if (!Validator.isInteger(this.#count)) {
       throw new InputError(ERROR_MESSAGES.otherFormat);
     }

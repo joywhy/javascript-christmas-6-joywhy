@@ -80,6 +80,9 @@ class Menus {
     return this.#dishs.some((dish) => dish.findCategory() === 'desserts');
   }
   //   - 총 주문한 메뉴 목록
+  filterMenus(category) {
+    return this.#dishs.filter((dish) => dish.findCategory() === category);
+  }
 }
 
 export default Menus;

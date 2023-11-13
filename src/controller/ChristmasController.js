@@ -29,7 +29,6 @@ class ChristmasController {
     }
   }
   async #inputOrder() {
-    // 주문하실 메뉴 와 갯수 입력
     try {
       const input = await InputView.readOrder();
       //, 없이 단메뉴만시켜도 유효하다. 공백을 사이사이 추가해도 유효하다.
@@ -43,31 +42,39 @@ class ChristmasController {
     }
   }
   #showPromotionResult({ menuList, reservationDate }) {
-    OutputView.printBenefitsPreview();
-
+    OutputView.printBenefitsPreview(reservationDate.getDate());
+    //주문메뉴와 할인전 총주문금액
     this.#showOrderedMenu(menuList);
+    //증정 메뉴 출력
     OutputView.printGiftedMenu(this.#event.getGiftedMenu());
-    this.#showBenefitsDetails();
+    //해택 내역 출력
+    const benefitsDetails = this.#showBenefitsDetails();
 
-    OutputView.printTotalBenefitsAmount();
+    //총 해택 내역 출력
+    this.#showTotalBenefits(benefitsDetails);
+
+    //할인 후 예상 결제 금액
     OutputView.printEstimatedPaymentAmount();
+    //12월 이벤트 배지
     OutputView.printEventBadge();
   }
   #showOrderedMenu(menuList) {
     OutputView.printOrderedMenu();
-    // console.log(menuList.getDishs());
+
     const dishs = menuList.getDishs();
-    // console.log(dishs);
     dishs.forEach((dish) => {
       OutputView.print(dish.getDishNCount());
     });
 
     OutputView.printSubtotalBFDiscount();
+    //3자리마다 , 로 작성해아여 출력
     OutputView.print(`${menuList.getTotalPrice()}원`);
   }
   #showBenefitsDetails() {
     OutputView.printBenefitsDetails();
+
     const benefitsDetails = this.#event.getBenefitsDetails();
+    console.log(benefitsDetails);
     if (!benefitsDetails) {
       OutputView.print('없음');
       return;
@@ -75,6 +82,11 @@ class ChristmasController {
     for (let key in benefitsDetails) {
       OutputView.print(`${key}: -${benefitsDetails[key]}원`);
     }
+    return benefitsDetails;
+  }
+  #showTotalBenefits(benefitsDetails) {
+    OutputView.printTotalBenefitsAmount();
+    //증정샴페인이 있는지 없는지
   }
 }
 export default ChristmasController;

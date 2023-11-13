@@ -33,7 +33,7 @@ const Validator = {
     }
     return false;
   },
-  IsIncluded(value, separator) {
+  isIncluded(value, separator) {
     if (!value.includes(separator)) {
       throw new InputError(ERROR_MESSAGES.otherFormat);
     }

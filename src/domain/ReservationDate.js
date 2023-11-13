@@ -14,7 +14,7 @@ class ReservationDate {
   constructor(day) {
     this.#validate(day);
     this.setDate(day);
-    this.#specialDay = [3, 10, 17, 24, 31];
+    this.#specialDay = [3, 10, 17, 24, 25, 31];
   }
   #validate(day) {
     if (!Validator.isInteger(Number(day))) {
