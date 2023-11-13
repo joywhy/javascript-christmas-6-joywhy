@@ -58,6 +58,9 @@ class Menu {
   getdish() {
     return this.#dish;
   }
+  getDishNCount() {
+    return `${this.#dish}-${this.#count}`;
+  }
 }
 
 // - [ ] 메뉴판에 없는 메뉴를 입력하는 경우, "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."라는 에러 메시지를 보낸다.
