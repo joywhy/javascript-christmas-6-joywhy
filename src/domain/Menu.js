@@ -22,7 +22,7 @@ class Menu {
     this.#dish = dish;
     this.#count = Number(count);
   }
-  #findCategory() {
+  findCategory() {
     let title = '';
     const categorys = Object.keys(MENU);
 
@@ -46,7 +46,7 @@ class Menu {
     }
   }
   isValidDish() {
-    if (this.#findCategory()) {
+    if (this.findCategory()) {
       return true;
     }
     throw new InputError(ERROR_MESSAGES.otherFormat);
