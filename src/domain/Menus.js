@@ -74,10 +74,10 @@ class Menus {
     return totalPrice;
   }
   isMainDishIncluded() {
-    //   - 메인디시 포함 되어있는지
+    return this.#dishs.some((dish) => dish.findCategory() === 'mainCourses');
   }
   isDessertsIncluded() {
-    //   - 디져트 포함되어있는지
+    return this.#dishs.some((dish) => dish.findCategory() === 'desserts');
   }
   //   - 총 주문한 메뉴 목록
 }

@@ -4,20 +4,19 @@ import ReservationDate from '../domain/ReservationDate.js';
 import Parser from '../utils/Parser.js';
 import Menu from '../domain/Menu.js';
 import Menus from '../domain/Menus.js';
+import Event from '../domain/Event.js';
 
 class ChristmasController {
-  #reservationDate;
-  #menuList;
+  #event;
   constructor() {
     OutputView.printIntroduction();
   }
   async promote() {
     const reservationDate = await this.#inputDate();
     const menuList = await this.#inputOrder();
-    this.#reservationDate = reservationDate;
-    this.#menuList = menuList;
-    // const event = new Event(reservationDate,menuList);
-    this.#showPromotionResult(); //event 인자
+
+    this.#event = new Event(reservationDate, menuList);
+    this.#showPromotionResult({ reservationDate, menuList }); //event 인자
   }
   async #inputDate() {
     try {
@@ -26,7 +25,7 @@ class ChristmasController {
       return date;
     } catch (error) {
       OutputView.printError(error);
-      await this.#inputDate();
+      return await this.#inputDate();
     }
   }
   async #inputOrder() {
@@ -34,35 +33,37 @@ class ChristmasController {
     try {
       const input = await InputView.readOrder();
       //, 없이 단메뉴만시켜도 유효하다. 공백을 사이사이 추가해도 유효하다.
-      const dishs = Parser.stringToArray(input, ',').map(
-        (menu) => new Menu(menu)
-      );
+      const dishs = Parser.stringToArray(input, ',').map((menu) => {
+        return new Menu(menu);
+      });
       return new Menus(dishs);
     } catch (error) {
       OutputView.printError(error);
-      await this.#inputOrder();
+      return await this.#inputOrder();
     }
   }
-  #showPromotionResult(event) {
-    // 프로모션 내용 출력
+  #showPromotionResult({ menuList, reservationDate }) {
     OutputView.printBenefitsPreview();
 
-    this.#showOrderedMenu();
+    this.#showOrderedMenu(menuList);
+    OutputView.printGiftedMenu(this.#event.getGiftedMenu());
 
-    OutputView.printGiftedMenu();
     OutputView.printBenefitsDetails();
     OutputView.printTotalBenefitsAmount();
     OutputView.printEstimatedPaymentAmount();
     OutputView.printEventBadge();
   }
-  #showOrderedMenu() {
+  #showOrderedMenu(menuList) {
     OutputView.printOrderedMenu();
-    this.#menuList.getDishs().forEach((dish) => {
+    // console.log(menuList.getDishs());
+    const dishs = menuList.getDishs();
+    // console.log(dishs);
+    dishs.forEach((dish) => {
       OutputView.print(dish.getDishNCount());
     });
 
     OutputView.printSubtotalBFDiscount();
-    OutputView.print(`${this.#menuList.getTotalPrice()}원`);
+    OutputView.print(`${menuList.getTotalPrice()}원`);
   }
 }
 export default ChristmasController;

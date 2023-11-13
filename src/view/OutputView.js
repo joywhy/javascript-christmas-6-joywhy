@@ -11,9 +11,9 @@ const OutputView = {
     Console.print(MESSAGES.subtotalBeforeDiscount);
     // Console.print(`${amount}원`);
   },
-  printGiftedMenu() {
+  printGiftedMenu(message) {
     Console.print(MESSAGES.giftedMenu);
-    // Console.print(gift);
+    Console.print(message);
   },
   printBenefitsDetails() {
     Console.print(MESSAGES.benefitsDetails);
