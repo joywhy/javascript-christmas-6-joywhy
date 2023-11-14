@@ -31,8 +31,7 @@ class ChristmasController {
   }
   async #inputOrder() {
     try {
-      const input = await InputView.readOrder();
-      //, 없이 단메뉴만시켜도 유효하다. 공백을 사이사이 추가해도 유효하다.
+      const input = await InputView.readOrder(); //, 없이 단메뉴만시켜도 유효하다. 공백을 사이사이 추가해도 유효하다.
       const dishs = Parser.stringToArray(input, ',').map((menu) => {
         return new Menu(menu);
       });
