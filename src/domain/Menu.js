@@ -35,11 +35,18 @@ class Menu {
     return title;
   }
   #validate(order) {
-    Validator.isIncluded(order, '-');
+    this.isIncluded(order, '-');
     this.isValidDish();
     // 갯수가 1미만이거나 숫자가 아닐시
     this.isValidCount();
   }
+  isIncluded(value, separator) {
+    if (!value.includes(separator)) {
+      throw new InputError(ERROR_MESSAGES.otherFormat);
+    }
+    return true;
+  }
+
   isValidCount() {
     if (!Validator.isInteger(this.#count)) {
       throw new InputError(ERROR_MESSAGES.otherFormat);
