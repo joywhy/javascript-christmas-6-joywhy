@@ -1,7 +1,6 @@
 import Menu from '../src/domain/Menu.js';
 
-const INVALID_ORDER_MESSAGE =
-  '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.';
+const INVALID_ORDER_MESSAGE = '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.';
 
 describe('메뉴 형식 테스트', () => {
   test.each([['티본스테이크+3'], ['해산물파스타--4']])(
@@ -10,21 +9,19 @@ describe('메뉴 형식 테스트', () => {
       expect(() => {
         new Menu(input);
       }).toThrow(INVALID_ORDER_MESSAGE);
-    }
+    },
   );
 });
 
 describe('메뉴 갯수 테스트', () => {
-  test.each([
-    ['초코케이크-0'],
-    ['양송이수프-2.4'],
-    ['아이스크림-^^df'],
-    ['크리스마스파스타-21'],
-  ])('숫자에 대한 예외 처리', (input) => {
-    expect(() => {
-      new Menu(input);
-    }).toThrow(INVALID_ORDER_MESSAGE);
-  });
+  test.each([['초코케이크-0'], ['양송이수프-2.4'], ['아이스크림-^^df'], ['크리스마스파스타-21']])(
+    '숫자에 대한 예외 처리',
+    (input) => {
+      expect(() => {
+        new Menu(input);
+      }).toThrow(INVALID_ORDER_MESSAGE);
+    },
+  );
 });
 
 describe('메뉴 이름 테스트', () => {

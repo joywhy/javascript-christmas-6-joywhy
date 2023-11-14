@@ -21,9 +21,6 @@ const ERROR_MESSAGES = Object.freeze({
   otherFormat: '유효하지 않은 주문입니다. 다시 입력해 주세요.',
   onlyDrink: '음료만 주문 시, 주문할 수 없습니다.',
   overOrderCount: '메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다.',
-  incorrectUnit: '단위가 맞지 않습니다.',
-  notANumber: '숫자가 아닙니다.',
-  zero: '0은 유효한 금액이 아닙니다.',
 });
 
 const DATE_RANGE = Object.freeze({
@@ -35,11 +32,4 @@ const WEEKEND = Object.freeze({
   saturday: 6,
 });
 const CHRISTMAS = 25;
-export {
-  MESSAGES,
-  INPUT_QUERY_MESSAGES,
-  ERROR_MESSAGES,
-  DATE_RANGE,
-  WEEKEND,
-  CHRISTMAS,
-};
+export { MESSAGES, INPUT_QUERY_MESSAGES, ERROR_MESSAGES, DATE_RANGE, WEEKEND, CHRISTMAS };

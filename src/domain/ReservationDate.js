@@ -1,10 +1,5 @@
 import Validator from '../utils/Validator.js';
-import {
-  DATE_RANGE,
-  WEEKEND,
-  CHRISTMAS,
-  ERROR_MESSAGES,
-} from '../constants/messages.js';
+import { DATE_RANGE, WEEKEND, CHRISTMAS, ERROR_MESSAGES } from '../constants/messages.js';
 import InputError from '../error/InputError.js';
 
 class ReservationDate {

@@ -27,17 +27,13 @@ class Event {
     const benefits = this.#reservationDate.getbenefitDetails(); //가능성이 있는 할인 내역
 
     if (this.isChristmasDdayEvent(benefits)) {
-      benefitsDetails['크리스마스 디데이 할인'] =
-        this.calculateChristmasDiscount();
+      benefitsDetails['크리스마스 디데이 할인'] = this.calculateChristmasDiscount();
     }
     if (this.isWeekdayEvent(benefits)) {
       benefitsDetails['평일 할인'] = this.calculateDiscount('desserts', 2023);
     }
     if (this.isWeekendEvent(benefits)) {
-      benefitsDetails['주말 할인'] = this.calculateDiscount(
-        'mainCourses',
-        2023
-      );
+      benefitsDetails['주말 할인'] = this.calculateDiscount('mainCourses', 2023);
     }
     if (this.isSpecialDay(benefits)) {
       benefitsDetails['특별 할인'] = 1000;
@@ -59,17 +55,11 @@ class Event {
     return discount;
   }
   isWeekdayEvent(benefits) {
-    return (
-      benefits.some((benefit) => benefit === 'weekday') &&
-      this.#menuList.isDessertsIncluded()
-    );
+    return benefits.some((benefit) => benefit === 'weekday') && this.#menuList.isDessertsIncluded();
   }
   isWeekendEvent(benefits) {
     // 주말 할인(금요일, 토요일): 주말에는 메인 메뉴를 메뉴 1개당 2,023원 할인
-    return (
-      benefits.some((benefit) => benefit === 'weekend') &&
-      this.#menuList.isMainDishIncluded()
-    );
+    return benefits.some((benefit) => benefit === 'weekend') && this.#menuList.isMainDishIncluded();
   }
 
   calculateDiscount(category, discountAmount) {
@@ -86,11 +76,7 @@ class Event {
   // - [ ] 총혜택 금액에 따라 5천 원 이상: 별,1만 원 이상: 트리, 2만 원 이상: 산타, 해택받지 못하면 없음을 출력한다.
   calculateEstimatedPaymentAmount(totalBenefit) {
     if (this.hasGiftedMenu()) {
-      return (
-        this.#menuList.getTotalPrice() -
-        totalBenefit +
-        this.getGiftedMenuPrice()
-      );
+      return this.#menuList.getTotalPrice() - totalBenefit + this.getGiftedMenuPrice();
     }
     return this.#menuList.getTotalPrice() - totalBenefit;
   }

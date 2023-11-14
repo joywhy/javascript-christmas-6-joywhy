@@ -9,7 +9,6 @@ const OutputView = {
   },
   printSubtotalBFDiscountTitle() {
     Console.print(MESSAGES.subtotalBeforeDiscount);
-    // Console.print(`${amount}원`);
   },
   printGiftedMenu() {
     Console.print(MESSAGES.giftedMenu);
@@ -19,30 +18,24 @@ const OutputView = {
   },
   printTotalBenefitsAmount() {
     Console.print(MESSAGES.totalBenefitsAmount);
-    // Console.print(`${price}원`);
   },
   printEstimatedPaymentAmount() {
     Console.print(MESSAGES.estimatedPaymentAmount);
-    // Console.print(`${price}원`);
   },
   printEventBadge() {
     Console.print(MESSAGES.eventBadge);
-    // Console.print(badge);
   },
 
   printIntroduction() {
     Console.print(MESSAGES.introductionToEventPlanner);
   },
   printBenefitsPreview(date) {
-    Console.print(
-      `12월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!`
-    );
+    Console.print(`12월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!`);
   },
 
   printError(error) {
     Console.print(error.message);
   },
-  // ...
 };
 
 export default OutputView;

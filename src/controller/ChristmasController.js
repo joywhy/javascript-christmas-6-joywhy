@@ -97,8 +97,7 @@ class ChristmasController {
     OutputView.printEstimatedPaymentAmount();
 
     const totalBenefit = this.#event.getTotalBenefit();
-    const finalPayment =
-      this.#event.calculateEstimatedPaymentAmount(totalBenefit);
+    const finalPayment = this.#event.calculateEstimatedPaymentAmount(totalBenefit);
 
     OutputView.print(`${Parser.toCommaSeparated(finalPayment)}원`);
   }

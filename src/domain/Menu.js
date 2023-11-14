@@ -23,8 +23,7 @@ class Menu {
     this.#count = Number(count);
   }
   #validate(order) {
-    if (!this.#isIncluded(order, '-'))
-      throw new InputError(ERROR_MESSAGES.otherFormat);
+    if (!this.#isIncluded(order, '-')) throw new InputError(ERROR_MESSAGES.otherFormat);
     if (!this.#isValidDish()) throw new InputError(ERROR_MESSAGES.otherFormat);
     if (!this.#isValidCount()) throw new InputError(ERROR_MESSAGES.otherFormat);
   }
@@ -35,9 +34,7 @@ class Menu {
     return this.findCategory();
   }
   #isValidCount() {
-    return (
-      Validator.isInteger(this.#count) && Validator.isRange(1, 20, this.#count)
-    );
+    return Validator.isInteger(this.#count) && Validator.isRange(1, 20, this.#count);
   }
 
   findCategory() {
