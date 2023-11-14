@@ -3,6 +3,7 @@ import { MENU } from '../constants/menu.js';
 class Event {
   #reservationDate;
   #menuList;
+  #giftedMenu = 'champagne';
   constructor(reservationDate, menuList) {
     this.#reservationDate = reservationDate;
     this.#menuList = menuList;
@@ -13,14 +14,8 @@ class Event {
   hasGiftedMenu() {
     return this.#menuList.getTotalPrice() >= 120000;
   }
-  getGiftedMenu() {
-    if (this.hasGiftedMenu()) {
-      return '샴페인 1개';
-    }
-    return '없음';
-  }
   getGiftedMenuPrice() {
-    return MENU.beverages.champagne;
+    return MENU.beverages[this.#giftedMenu];
   }
   getBenefitsDetails() {
     let benefitsDetails = {};

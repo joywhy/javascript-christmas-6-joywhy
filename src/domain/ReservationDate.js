@@ -23,7 +23,12 @@ class ReservationDate {
 
   getbenefitDetails() {
     const benefitDetails = [];
-
+    // const benefitDetails = {
+    //   isWeekend :false,
+    //   isChristmasDday :false,
+    //   isSpecialDay :false,
+    //   isWeekday :false,
+    // }
     if (this.#isWeekend()) benefitDetails.push('weekend');
     if (this.#isChristmasDday()) benefitDetails.push('christmasDday');
     if (this.#isSpecialDay()) benefitDetails.push('specialDay');

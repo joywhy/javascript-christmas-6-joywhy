@@ -68,7 +68,10 @@ class ChristmasController {
   }
   #showGiftedMenu() {
     OutputView.printGiftedMenu();
-    OutputView.print(this.#event.getGiftedMenu());
+    if (this.#event.hasGiftedMenu()) {
+      OutputView.print('샴페인 1개');
+    }
+    OutputView.print('없음');
   }
   #showBenefitsDetails() {
     OutputView.printBenefitsDetailsTitle(); //해택내역 // OutputView.print(MESSAGES.benefitsDetails);
