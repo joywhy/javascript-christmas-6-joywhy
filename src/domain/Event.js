@@ -103,5 +103,20 @@ class Event {
     }, 0);
     return totalBenefits;
   }
+  getEventBadge() {
+    const totalBenefit = this.getTotalBenefit();
+    // totalBenefit 이 5천 원 이상이면 별, 1만 원 이상이면  트리,
+    //  2만 원 이상 이면 산타 를 출력하고 해당하지 으면 "없음" 을 리턴하는 js 코드
+    if (totalBenefit >= 20000) {
+      return '산타';
+    }
+    if (totalBenefit >= 10000) {
+      return '트리';
+    }
+    if (totalBenefit >= 5000) {
+      return '별';
+    }
+    return '없음';
+  }
 }
 export default Event;

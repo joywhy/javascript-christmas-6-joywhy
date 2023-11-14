@@ -104,8 +104,8 @@ class ChristmasController {
   }
   #showEventBadge() {
     OutputView.printEventBadge();
-    const totalBenefit = this.#event.getTotalBenefit();
-    //이벤트 벳지 구하는 것도 event 클래스에 옮기기
+    const badge = this.#event.getEventBadge();
+    OutputView.print(badge);
   }
 }
 export default ChristmasController;
