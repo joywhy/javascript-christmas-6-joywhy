@@ -23,31 +23,21 @@ class Menu {
     this.#count = Number(count);
   }
   #validate(order) {
-    this.#isIncluded(order, '-');
-    this.#isValidDish();
-    this.#isValidCount();
+    if (!this.#isIncluded(order, '-'))
+      throw new InputError(ERROR_MESSAGES.otherFormat);
+    if (!this.#isValidDish()) throw new InputError(ERROR_MESSAGES.otherFormat);
+    if (!this.#isValidCount()) throw new InputError(ERROR_MESSAGES.otherFormat);
   }
   #isIncluded(value, separator) {
-    if (!value.includes(separator)) {
-      throw new InputError(ERROR_MESSAGES.otherFormat);
-    }
-    return true;
-  }
-
-  #isValidCount() {
-    if (!Validator.isInteger(this.#count)) {
-      throw new InputError(ERROR_MESSAGES.otherFormat);
-    }
-
-    if (!Validator.isRange(1, 20, this.#count)) {
-      throw new InputError(ERROR_MESSAGES.otherFormat);
-    }
+    return value.includes(separator);
   }
   #isValidDish() {
-    if (this.findCategory()) {
-      return true;
-    }
-    throw new InputError(ERROR_MESSAGES.otherFormat);
+    return this.findCategory();
+  }
+  #isValidCount() {
+    return (
+      Validator.isInteger(this.#count) && Validator.isRange(1, 20, this.#count)
+    );
   }
 
   findCategory() {
@@ -61,18 +51,6 @@ class Menu {
     });
     return title;
   }
-
-  getCount() {
-    return this.#count; //일하는가
-  }
-
-  getdish() {
-    return this.#dish; //일하는가
-  }
-  getDishNCount() {
-    //이게 맞는가
-    return `${this.#dish} ${this.#count}개`;
-  }
   getPrice() {
     let price = 0;
     const category = this.findCategory();
@@ -83,6 +61,13 @@ class Menu {
       }
     });
     return price;
+  }
+  getCount() {
+    return this.#count;
+  }
+
+  getdish() {
+    return this.#dish;
   }
 }
 

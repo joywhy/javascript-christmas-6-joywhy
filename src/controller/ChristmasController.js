@@ -58,7 +58,7 @@ class ChristmasController {
 
     const dishs = menuList.getDishs(); //[Menu{},Menu{}]
     dishs.forEach((dish) => {
-      OutputView.print(dish.getDishNCount()); //고민
+      OutputView.print(`${dish.getdish()} ${dish.getCount()}개`); //고민
     });
   }
   #showSubtotalBFDiscount(menuList) {
