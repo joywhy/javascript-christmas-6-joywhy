@@ -1,7 +1,7 @@
 import InputError from '../error/InputError.js';
 import { ERROR_MESSAGES } from '../constants/messages.js';
 class Menus {
-  #dishs; //=[ Menu{},Menu{},...]
+  #dishs; // [ Menu{},Menu{},...]
 
   constructor(dishs) {
     this.#dishs = dishs;
@@ -9,12 +9,19 @@ class Menus {
   }
 
   #validate() {
-    if (this.#isOnlyDrink()) throw new InputError(ERROR_MESSAGES.onlyDrink);
+    if (this.#isOnlyDrink()) throw new InputError(ERROR_MESSAGES.otherFormat);
     if (this.#isDuplicates()) throw new InputError(ERROR_MESSAGES.otherFormat);
     if (this.getTotalCount() > 20) throw new InputError(ERROR_MESSAGES.overOrderCount);
   }
   #isOnlyDrink() {
-    return this.getCount() === 1 && this.#dishs[0].findCategory() === 'beverages';
+    let isOnlyDrink = true;
+
+    this.#dishs.forEach((dish) => {
+      if (dish.findCategory() !== 'beverages') {
+        isOnlyDrink = false;
+      }
+    });
+    return isOnlyDrink;
   }
 
   #isDuplicates() {

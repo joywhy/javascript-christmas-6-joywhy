@@ -1,5 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { MESSAGES } from '../constants/messages.js';
+
 const OutputView = {
   print(message) {
     Console.print(message);
