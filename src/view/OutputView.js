@@ -4,20 +4,18 @@ const OutputView = {
   print(message) {
     Console.print(message);
   },
-  printOrderedMenu() {
+  printOrderedMenuTitle() {
     Console.print(MESSAGES.orderedMenu);
   },
-  printSubtotalBFDiscount() {
+  printSubtotalBFDiscountTitle() {
     Console.print(MESSAGES.subtotalBeforeDiscount);
     // Console.print(`${amount}원`);
   },
-  printGiftedMenu(message) {
+  printGiftedMenu() {
     Console.print(MESSAGES.giftedMenu);
-    Console.print(message);
   },
-  printBenefitsDetails() {
+  printBenefitsDetailsTitle() {
     Console.print(MESSAGES.benefitsDetails);
-    // Console.print(benefit);
   },
   printTotalBenefitsAmount() {
     Console.print(MESSAGES.totalBenefitsAmount);

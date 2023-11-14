@@ -1,3 +1,5 @@
+import { MENU } from '../constants/menu.js';
+
 class Event {
   #reservationDate;
   #menuList;
@@ -17,15 +19,14 @@ class Event {
     }
     return '없음';
   }
+  getGiftedMenuPrice() {
+    return MENU.beverages.champagne;
+  }
   getBenefitsDetails() {
     let benefitsDetails = {};
-    if (!this.isEventApplicable()) {
-      ///일단 모르겠음.
-      return undefined;
-    }
     const benefits = this.#reservationDate.getbenefitDetails(); //가능성이 있는 할인 내역
-    // ['specialDay', 'weekend'];
-    if (benefits.some((benefit) => benefit === 'christmasDday')) {
+
+    if (this.isChristmasDdayEvent(benefits)) {
       benefitsDetails['크리스마스 디데이 할인'] =
         this.calculateChristmasDiscount();
     }
@@ -38,14 +39,23 @@ class Event {
         2023
       );
     }
-    if (benefits.some((benefit) => benefit === 'specialDay')) {
+    if (this.isSpecialDay(benefits)) {
       benefitsDetails['특별 할인'] = 1000;
+    }
+    if (this.hasGiftedMenu()) {
+      benefitsDetails['증정 이벤트'] = 25000;
     }
     return benefitsDetails;
   }
+  isChristmasDdayEvent(benefits) {
+    return benefits.some((benefit) => benefit === 'christmasDday');
+  }
+  isSpecialDay(benefits) {
+    return benefits.some((benefit) => benefit === 'specialDay');
+  }
   calculateChristmasDiscount() {
     const date = this.#reservationDate.getDate();
-    const discount = 1000 + date * 100;
+    const discount = 1000 + (date - 1) * 100;
     return discount;
   }
   isWeekdayEvent(benefits) {
@@ -67,6 +77,7 @@ class Event {
     //getDishs().filter 돌리는 부분은 다른곳에서도 저렇게 많이 쓴다면  다형성 적용
     const filterdMenus = this.#menuList.filterMenus(category);
     const count = filterdMenus.reduce((acc, cur) => {
+      // 갯수합하기 메서드로 Menus 메서드 순수함수로 분리
       return (acc += cur.getCount());
     }, 0);
     return count * discountAmount;
@@ -87,5 +98,15 @@ class Event {
 
   // - [ ] 12월 이벤트 배지을 출력한다.
   // - [ ] 총혜택 금액에 따라 5천 원 이상: 별,1만 원 이상: 트리, 2만 원 이상: 산타, 해택받지 못하면 없음을 출력한다.
+  calculateEstimatedPaymentAmount(totalBenefit) {
+    if (this.hasGiftedMenu()) {
+      return (
+        this.#menuList.getTotalPrice() -
+        totalBenefit +
+        this.getGiftedMenuPrice()
+      );
+    }
+    return this.#menuList.getTotalPrice() - totalBenefit;
+  }
 }
 export default Event;

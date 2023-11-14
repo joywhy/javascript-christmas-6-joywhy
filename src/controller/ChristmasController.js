@@ -5,9 +5,12 @@ import Parser from '../utils/Parser.js';
 import Menu from '../domain/Menu.js';
 import Menus from '../domain/Menus.js';
 import Event from '../domain/Event.js';
+import { MESSAGES } from '../constants/messages.js';
+import { MENU } from '../constants/menu.js';
 
 class ChristmasController {
   #event;
+
   constructor() {
     OutputView.printIntroduction();
   }
@@ -15,7 +18,7 @@ class ChristmasController {
     const reservationDate = await this.#inputDate();
     const menuList = await this.#inputOrder();
 
-    this.#event = new Event(reservationDate, menuList);
+    this.#event = new Event(reservationDate, menuList); //
     this.#showPromotionResult({ reservationDate, menuList }); //event 인자
   }
   async #inputDate() {
@@ -43,50 +46,65 @@ class ChristmasController {
   }
   #showPromotionResult({ menuList, reservationDate }) {
     OutputView.printBenefitsPreview(reservationDate.getDate());
-    //주문메뉴와 할인전 총주문금액
+
     this.#showOrderedMenu(menuList);
-    //증정 메뉴 출력
-    OutputView.printGiftedMenu(this.#event.getGiftedMenu());
-    //해택 내역 출력
+    this.#showSubtotalBFDiscount(menuList);
+    this.#showGiftedMenu();
     const benefitsDetails = this.#showBenefitsDetails();
-
-    //총 해택 내역 출력
-    this.#showTotalBenefits(benefitsDetails);
-
-    //할인 후 예상 결제 금액
-    OutputView.printEstimatedPaymentAmount();
+    const totalBenefit = this.#showTotalBenefits(benefitsDetails);
+    this.#showEstimatedAmount(totalBenefit);
     //12월 이벤트 배지
     OutputView.printEventBadge();
   }
   #showOrderedMenu(menuList) {
-    OutputView.printOrderedMenu();
+    OutputView.printOrderedMenuTitle();
 
-    const dishs = menuList.getDishs();
+    const dishs = menuList.getDishs(); //[Menu{},Menu{}]
     dishs.forEach((dish) => {
-      OutputView.print(dish.getDishNCount());
+      OutputView.print(dish.getDishNCount()); //고민
     });
-
-    OutputView.printSubtotalBFDiscount();
-    //3자리마다 , 로 작성해아여 출력
-    OutputView.print(`${menuList.getTotalPrice()}원`);
+  }
+  #showSubtotalBFDiscount(menuList) {
+    OutputView.printSubtotalBFDiscountTitle();
+    const totalPrice = Parser.toCommaSeparated(menuList.getTotalPrice());
+    OutputView.print(`${totalPrice}원`);
+  }
+  #showGiftedMenu() {
+    OutputView.printGiftedMenu();
+    OutputView.print(this.#event.getGiftedMenu());
   }
   #showBenefitsDetails() {
-    OutputView.printBenefitsDetails();
+    OutputView.printBenefitsDetailsTitle(); //해택내역 // OutputView.print(MESSAGES.benefitsDetails);
+
+    if (!this.#event.isEventApplicable()) return OutputView.print('없음');
 
     const benefitsDetails = this.#event.getBenefitsDetails();
-    console.log(benefitsDetails);
-    if (!benefitsDetails) {
-      OutputView.print('없음');
-      return;
-    }
-    for (let key in benefitsDetails) {
-      OutputView.print(`${key}: -${benefitsDetails[key]}원`);
+    for (let benefit in benefitsDetails) {
+      let benefitsPrice = Parser.toCommaSeparated(benefitsDetails[benefit]);
+      OutputView.print(`${benefit}: -${benefitsPrice}원`);
     }
     return benefitsDetails;
   }
   #showTotalBenefits(benefitsDetails) {
     OutputView.printTotalBenefitsAmount();
-    //증정샴페인이 있는지 없는지
+    if (!this.#event.isEventApplicable()) {
+      OutputView.print('0원');
+      return 0;
+    }
+
+    let totalBenefits = Object.values(benefitsDetails).reduce((acc, cur) => {
+      return (acc += cur);
+    }, 0);
+    const separatedTotalBenefits = Parser.toCommaSeparated(totalBenefits);
+    OutputView.print(`-${separatedTotalBenefits}원`);
+    return totalBenefits;
+  }
+
+  #showEstimatedAmount(totalBenefit) {
+    OutputView.printEstimatedPaymentAmount();
+    const finalPayment =
+      this.#event.calculateEstimatedPaymentAmount(totalBenefit);
+    OutputView.print(`${Parser.toCommaSeparated(finalPayment)}원`);
   }
 }
 export default ChristmasController;
