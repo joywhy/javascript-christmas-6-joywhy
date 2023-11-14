@@ -5,8 +5,6 @@ import Parser from '../utils/Parser.js';
 import Menu from '../domain/Menu.js';
 import Menus from '../domain/Menus.js';
 import Event from '../domain/Event.js';
-import { MESSAGES } from '../constants/messages.js';
-import { MENU } from '../constants/menu.js';
 
 class ChristmasController {
   #event;
@@ -50,11 +48,10 @@ class ChristmasController {
     this.#showOrderedMenu(menuList);
     this.#showSubtotalBFDiscount(menuList);
     this.#showGiftedMenu();
-    const benefitsDetails = this.#showBenefitsDetails();
-    const totalBenefit = this.#showTotalBenefits(benefitsDetails);
-    this.#showEstimatedAmount(totalBenefit);
-    //12월 이벤트 배지
-    OutputView.printEventBadge();
+    this.#showBenefitsDetails();
+    this.#showTotalBenefits();
+    this.#showEstimatedAmount();
+    this.#showEventBadge();
   }
   #showOrderedMenu(menuList) {
     OutputView.printOrderedMenuTitle();
@@ -83,28 +80,32 @@ class ChristmasController {
       let benefitsPrice = Parser.toCommaSeparated(benefitsDetails[benefit]);
       OutputView.print(`${benefit}: -${benefitsPrice}원`);
     }
-    return benefitsDetails;
   }
-  #showTotalBenefits(benefitsDetails) {
+  #showTotalBenefits() {
     OutputView.printTotalBenefitsAmount();
-    if (!this.#event.isEventApplicable()) {
-      OutputView.print('0원');
-      return 0;
-    }
 
-    let totalBenefits = Object.values(benefitsDetails).reduce((acc, cur) => {
-      return (acc += cur);
-    }, 0);
+    const totalBenefits = this.#event.getTotalBenefit();
     const separatedTotalBenefits = Parser.toCommaSeparated(totalBenefits);
+
+    if (separatedTotalBenefits === '0') {
+      return OutputView.print(`${separatedTotalBenefits}원`);
+    }
     OutputView.print(`-${separatedTotalBenefits}원`);
-    return totalBenefits;
   }
 
-  #showEstimatedAmount(totalBenefit) {
+  #showEstimatedAmount() {
     OutputView.printEstimatedPaymentAmount();
+
+    const totalBenefit = this.#event.getTotalBenefit();
     const finalPayment =
       this.#event.calculateEstimatedPaymentAmount(totalBenefit);
+
     OutputView.print(`${Parser.toCommaSeparated(finalPayment)}원`);
+  }
+  #showEventBadge() {
+    OutputView.printEventBadge();
+    const totalBenefit = this.#event.getTotalBenefit();
+    //이벤트 벳지 구하는 것도 event 클래스에 옮기기
   }
 }
 export default ChristmasController;
