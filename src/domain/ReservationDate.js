@@ -22,17 +22,16 @@ class ReservationDate {
   }
 
   getbenefitDetails() {
-    const benefitDetails = [];
-    // const benefitDetails = {
-    //   isWeekend :false,
-    //   isChristmasDday :false,
-    //   isSpecialDay :false,
-    //   isWeekday :false,
-    // }
-    if (this.#isWeekend()) benefitDetails.push('weekend');
-    if (this.#isChristmasDday()) benefitDetails.push('christmasDday');
-    if (this.#isSpecialDay()) benefitDetails.push('specialDay');
-    if (!benefitDetails.includes('weekend')) benefitDetails.push('weekday');
+    const benefitDetails = {
+      isWeekend: false,
+      isChristmasDday: false,
+      isSpecialDay: false,
+      isWeekday: false,
+    };
+    if (this.#isWeekend()) benefitDetails.isWeekend = true;
+    if (this.#isChristmasDday()) benefitDetails.isChristmasDday = true;
+    if (this.#isSpecialDay()) benefitDetails.isSpecialDay = true;
+    if (!benefitDetails.isWeekend) benefitDetails.isWeekday = true;
 
     return benefitDetails;
   }
