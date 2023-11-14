@@ -55,11 +55,17 @@ class Event {
     return discount;
   }
   isWeekdayEvent(benefits) {
-    return benefits.some((benefit) => benefit === 'weekday') && this.#menuList.isDessertsIncluded();
+    return (
+      benefits.some((benefit) => benefit === 'weekday') &&
+      this.#menuList.isIncludedCategory('desserts')
+    );
   }
   isWeekendEvent(benefits) {
     // 주말 할인(금요일, 토요일): 주말에는 메인 메뉴를 메뉴 1개당 2,023원 할인
-    return benefits.some((benefit) => benefit === 'weekend') && this.#menuList.isMainDishIncluded();
+    return (
+      benefits.some((benefit) => benefit === 'weekend') &&
+      this.#menuList.isIncludedCategory('mainCourses')
+    );
   }
 
   calculateDiscount(category, discountAmount) {

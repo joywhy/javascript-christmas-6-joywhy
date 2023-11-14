@@ -11,7 +11,7 @@ class Menus {
   #validate() {
     if (this.#isOnlyDrink()) throw new InputError(ERROR_MESSAGES.otherFormat);
     if (this.#isDuplicates()) throw new InputError(ERROR_MESSAGES.otherFormat);
-    if (this.getTotalCount() > 20) throw new InputError(ERROR_MESSAGES.overOrderCount);
+    if (this.getTotalCount() > 20) throw new InputError(ERROR_MESSAGES.otherFormat);
   }
   #isOnlyDrink() {
     let isOnlyDrink = true;
@@ -30,15 +30,9 @@ class Menus {
 
     return menus.length !== uniqueMenus.size;
   }
-  getDishs() {
-    return this.#dishs;
-  }
-  getCount() {
-    return this.#dishs.length;
-  }
   getTotalCount() {
     return this.#dishs.reduce((acc, cur) => {
-      return acc + cur.getCount();
+      return acc + cur.getCount(); //menu의 갯수
     }, 0);
   }
   getTotalPrice() {
@@ -46,15 +40,20 @@ class Menus {
       return (acc += cur.getPrice());
     }, 0);
   }
-  isMainDishIncluded() {
-    return this.#dishs.some((dish) => dish.findCategory() === 'mainCourses');
+  isIncludedCategory(category) {
+    return this.#dishs.some((dish) => dish.findCategory() === category);
   }
-  isDessertsIncluded() {
-    return this.#dishs.some((dish) => dish.findCategory() === 'desserts');
-  }
-  //   - 총 주문한 메뉴 목록
+
   filterMenus(category) {
     return this.#dishs.filter((dish) => dish.findCategory() === category);
+  }
+  getDishs() {
+    //쓰나
+    return this.#dishs;
+  }
+  getCount() {
+    //이거 쓰나?
+    return this.#dishs.length;
   }
 }
 
