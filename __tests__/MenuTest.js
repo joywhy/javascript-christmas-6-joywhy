@@ -10,25 +10,16 @@ describe('메뉴 형식 테스트', () => {
     }).toThrow(INVALID_ORDER_MESSAGE);
   });
 });
+
 describe('메뉴 갯수 테스트', () => {
-  test('갯수에 대해 1미만 숫자일시 에외가 발생한다.', () => {
+  test.each([
+    ['초코케이크-0'],
+    ['양송이수프-2.4'],
+    ['아이스크림-^^df'],
+    ['크리스마스파스타-21'],
+  ])('숫자에 대한 예외 처리', (input) => {
     expect(() => {
-      new Menu('초코케이크-0');
-    }).toThrow(INVALID_ORDER_MESSAGE);
-  });
-  test('갯수에 대해 양의 정수가 아닐시 에외가 발생한다.', () => {
-    expect(() => {
-      new Menu('양송이수프-2.4');
-    }).toThrow(INVALID_ORDER_MESSAGE);
-  });
-  test('갯수에 대해 숫자가 아닐시 에외가 발생한다.', () => {
-    expect(() => {
-      new Menu('양송이수프-^^df');
-    }).toThrow(INVALID_ORDER_MESSAGE);
-  });
-  test('갯수에 대해 20초과일시 에외가 발생한다.', () => {
-    expect(() => {
-      new Menu('크리스마스파스타-21');
+      new Menu(input);
     }).toThrow(INVALID_ORDER_MESSAGE);
   });
 });

@@ -9,7 +9,6 @@ class Menu {
   #count;
 
   constructor(order) {
-    //큐블-3
     this.#setOrder(order);
     this.#validate(order);
   }
@@ -23,6 +22,34 @@ class Menu {
     this.#dish = dish;
     this.#count = Number(count);
   }
+  #validate(order) {
+    this.#isIncluded(order, '-');
+    this.#isValidDish();
+    this.#isValidCount();
+  }
+  #isIncluded(value, separator) {
+    if (!value.includes(separator)) {
+      throw new InputError(ERROR_MESSAGES.otherFormat);
+    }
+    return true;
+  }
+
+  #isValidCount() {
+    if (!Validator.isInteger(this.#count)) {
+      throw new InputError(ERROR_MESSAGES.otherFormat);
+    }
+
+    if (!Validator.isRange(1, 20, this.#count)) {
+      throw new InputError(ERROR_MESSAGES.otherFormat);
+    }
+  }
+  #isValidDish() {
+    if (this.findCategory()) {
+      return true;
+    }
+    throw new InputError(ERROR_MESSAGES.otherFormat);
+  }
+
   findCategory() {
     let title = '';
     const categorys = Object.keys(MENU);
@@ -34,42 +61,16 @@ class Menu {
     });
     return title;
   }
-  #validate(order) {
-    this.isIncluded(order, '-');
-    this.isValidDish();
-    // 갯수가 1미만이거나 숫자가 아닐시
-    this.isValidCount();
-  }
-  isIncluded(value, separator) {
-    if (!value.includes(separator)) {
-      throw new InputError(ERROR_MESSAGES.otherFormat);
-    }
-    return true;
-  }
 
-  isValidCount() {
-    if (!Validator.isInteger(this.#count)) {
-      throw new InputError(ERROR_MESSAGES.otherFormat);
-    }
-
-    if (!Validator.isRange(1, 20, this.#count)) {
-      throw new InputError(ERROR_MESSAGES.otherFormat);
-    }
-  }
-  isValidDish() {
-    if (this.findCategory()) {
-      return true;
-    }
-    throw new InputError(ERROR_MESSAGES.otherFormat);
-  }
   getCount() {
-    return this.#count;
+    return this.#count; //일하는가
   }
 
   getdish() {
-    return this.#dish;
+    return this.#dish; //일하는가
   }
   getDishNCount() {
+    //이게 맞는가
     return `${this.#dish} ${this.#count}개`;
   }
   getPrice() {
@@ -84,7 +85,5 @@ class Menu {
     return price;
   }
 }
-
-// - [ ] 메뉴 형식이 예시와 다른 경우, "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."라는 에러 메시지를 보여 준다.
 
 export default Menu;
