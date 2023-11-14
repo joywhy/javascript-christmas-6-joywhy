@@ -4,11 +4,14 @@ const INVALID_ORDER_MESSAGE =
   '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.';
 
 describe('메뉴 형식 테스트', () => {
-  test('-로 구분하여 메뉴를 입력하지 않으면, 예외가 발생한다.', () => {
-    expect(() => {
-      new Menu('티본스테이크+3');
-    }).toThrow(INVALID_ORDER_MESSAGE);
-  });
+  test.each([['티본스테이크+3'], ['해산물파스타--4']])(
+    '-로 구분하여 메뉴를 입력하지 않으면, 예외가 발생한다.',
+    (input) => {
+      expect(() => {
+        new Menu(input);
+      }).toThrow(INVALID_ORDER_MESSAGE);
+    }
+  );
 });
 
 describe('메뉴 갯수 테스트', () => {
