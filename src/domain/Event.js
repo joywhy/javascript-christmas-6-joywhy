@@ -20,11 +20,11 @@ class Event {
   getBenefitsDetails() {
     let details = {};
     const benefits = this.#reservationDate.getbenefitDetails(); //가능성이 있는 할인 내역
-
     if (benefits.isChristmasDday)
       details['크리스마스 디데이 할인'] = this.calculateChristmasDiscount();
-    if (this.isWeekdayEvent(benefits))
+    if (this.isWeekdayEvent(benefits)) {
       details['평일 할인'] = this.calculateDiscount('desserts', 2023);
+    }
     if (this.isWeekendEvent(benefits))
       details['주말 할인'] = this.calculateDiscount('mainCourses', 2023);
     if (benefits.isSpecialDay) details['특별 할인'] = 1000;
@@ -33,7 +33,7 @@ class Event {
     return details;
   }
   isWeekdayEvent(benefits) {
-    return benefits.isweekday && this.#menuList.isIncludedCategory('desserts');
+    return benefits.isWeekday && this.#menuList.isIncludedCategory('desserts');
   }
   isWeekendEvent(benefits) {
     return benefits.isWeekend && this.#menuList.isIncludedCategory('mainCourses');

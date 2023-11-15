@@ -68,7 +68,7 @@ class ChristmasController {
   #showGiftedMenu() {
     OutputView.printGiftedMenu();
     if (this.#event.hasGiftedMenu()) {
-      OutputView.print('샴페인 1개');
+      return OutputView.print('샴페인 1개');
     }
     OutputView.print('없음');
   }

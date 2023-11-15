@@ -48,11 +48,9 @@ class Menus {
     return this.#dishs.filter((dish) => dish.findCategory() === category);
   }
   getDishs() {
-    //쓰나
     return this.#dishs;
   }
   getCount() {
-    //이거 쓰나?
     return this.#dishs.length;
   }
 }
