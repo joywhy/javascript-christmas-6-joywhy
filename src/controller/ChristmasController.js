@@ -16,8 +16,8 @@ class ChristmasController {
     const reservationDate = await this.#inputDate();
     const menuList = await this.#inputOrder();
 
-    this.#event = new Event(reservationDate, menuList); //
-    this.#showPromotionResult({ reservationDate, menuList }); //event 인자
+    this.#event = new Event(reservationDate, menuList);
+    this.#showPromotionResult({ reservationDate, menuList });
   }
   async #inputDate() {
     try {
@@ -31,7 +31,7 @@ class ChristmasController {
   }
   async #inputOrder() {
     try {
-      const input = await InputView.readOrder(); //, 없이 단메뉴만시켜도 유효하다. 공백을 사이사이 추가해도 유효하다.
+      const input = await InputView.readOrder();
       const dishs = Parser.stringToArray(input, ',').map((menu) => {
         return new Menu(menu);
       });
@@ -55,25 +55,27 @@ class ChristmasController {
   #showOrderedMenu(menuList) {
     OutputView.printOrderedMenuTitle();
 
-    const dishs = menuList.getDishs(); //[Menu{},Menu{}]
+    const dishs = menuList.getDishs();
     dishs.forEach((dish) => {
-      OutputView.print(`${dish.getdish()} ${dish.getCount()}개`); //고민
+      OutputView.print(`${dish.getdish()} ${dish.getCount()}개`);
     });
   }
   #showSubtotalBFDiscount(menuList) {
     OutputView.printSubtotalBFDiscountTitle();
+
     const totalPrice = Parser.toCommaSeparated(menuList.getTotalPrice());
     OutputView.print(`${totalPrice}원`);
   }
   #showGiftedMenu() {
     OutputView.printGiftedMenu();
+
     if (this.#event.hasGiftedMenu()) {
       return OutputView.print('샴페인 1개');
     }
     OutputView.print('없음');
   }
   #showBenefitsDetails() {
-    OutputView.printBenefitsDetailsTitle(); //해택내역 // OutputView.print(MESSAGES.benefitsDetails);
+    OutputView.printBenefitsDetailsTitle();
 
     if (!this.#event.isEventApplicable()) return OutputView.print('없음');
 
